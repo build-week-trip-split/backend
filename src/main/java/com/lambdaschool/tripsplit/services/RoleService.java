@@ -1,6 +1,6 @@
 package com.lambdaschool.tripsplit.services;
 
-import com.lambdaschool.starthere.models.Role;
+import com.lambdaschool.tripsplit.models.Role;
 
 import java.util.List;
 

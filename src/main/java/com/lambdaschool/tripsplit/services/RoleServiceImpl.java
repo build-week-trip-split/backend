@@ -1,7 +1,7 @@
 package com.lambdaschool.tripsplit.services;
 
-import com.lambdaschool.starthere.models.Role;
-import com.lambdaschool.starthere.repository.RoleRepository;
+import com.lambdaschool.tripsplit.models.Role;
+import com.lambdaschool.tripsplit.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

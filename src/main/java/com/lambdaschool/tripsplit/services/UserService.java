@@ -1,6 +1,6 @@
 package com.lambdaschool.tripsplit.services;
 
-import com.lambdaschool.starthere.models.User;
+import com.lambdaschool.tripsplit.models.User;
 
 import java.util.List;
 
