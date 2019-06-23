@@ -1,7 +1,8 @@
 package com.lambdaschool.tripsplit.models;
 
 
-import com.lambdaschool.starthere.exceptions.ValidationError;
+
+import com.lambdaschool.tripsplit.exceptions.ValidationError;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
