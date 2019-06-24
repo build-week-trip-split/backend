@@ -32,7 +32,12 @@ public class User extends Auditable
     @JsonIgnoreProperties("user")
     private List<UserRoles> userRoles = new ArrayList<>();
 
-
+    @ManyToMany
+    @JoinTable(name = "usertrips",
+                joinColumns = {@JoinColumn(name = "userid")},
+                inverseJoinColumns = {@JoinColumn(name = "tripid")})
+    @JsonIgnoreProperties("users")
+    private List<Trip> trips = new ArrayList<>();
 
     public User()
     {
