@@ -1,7 +1,11 @@
 package com.lambdaschool.tripsplit.services;
 
 import com.lambdaschool.tripsplit.models.Bill;
+import com.lambdaschool.tripsplit.models.Trip;
+import com.lambdaschool.tripsplit.models.User;
 import com.lambdaschool.tripsplit.repository.BillRepository;
+import com.lambdaschool.tripsplit.repository.TripRepository;
+import com.lambdaschool.tripsplit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,12 @@ public class BillServiceImpl implements BillService
 {
     @Autowired
     private BillRepository billRepos;
+
+    @Autowired
+    private TripRepository tripRepos;
+
+    @Autowired
+    private UserRepository userRepos;
 
     @Override
     public List<Bill> findAll()
@@ -47,14 +57,18 @@ public class BillServiceImpl implements BillService
 
     @Transactional
     @Override
-    public Bill save(Bill bill)
+    public Bill save(Bill bill,long tripid, long userid)
     {
         Bill newBill = new Bill();
+        User user = userRepos.findById(userid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(userid)));
+        Trip trip = tripRepos.findById(tripid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(tripid)));
 
         newBill.setBillTitle(bill.getBillTitle());
         newBill.setBillAmount(bill.getBillAmount());
-        newBill.setPaidBy(bill.getPaidBy());
-        newBill.setTrip(bill.getTrip());
+        newBill.setPaidBy(user);
+        newBill.setTrip(trip);
 
         return billRepos.save(newBill);
     }

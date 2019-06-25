@@ -12,7 +12,7 @@ public interface BillService
 
     void  delete(long id);
 
-    Bill save( Bill bill);
+    Bill save( Bill bill,long tripid, long userid);
 
     Bill update(Bill bill, long id);
 
