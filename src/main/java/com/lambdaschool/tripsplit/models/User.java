@@ -27,11 +27,28 @@ public class User extends Auditable
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    /////////////UserRolse/////////////////
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<UserRoles> userRoles = new ArrayList<>();
 
+
+    //////////UserTrips/////////////////////
+    @ManyToMany
+    @JoinTable(name = "usertrips",
+                joinColumns = {@JoinColumn(name = "userid")},
+                inverseJoinColumns = {@JoinColumn(name = "tripid")})
+    @JsonIgnoreProperties("users")
+    private List<Trip> trips = new ArrayList<>();
+
+
+    ///////////PaidBy////////////////////////
+    @OneToMany(mappedBy = "paidBy",
+                cascade = CascadeType.ALL,
+                orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private List<Bill> bills = new ArrayList<>();
 
 
     public User()

@@ -30,10 +30,10 @@ public class Swagger2Config
 
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("Java String Back End Build Week")
-                .description("Tripsplit using Java Spring")
+        return new ApiInfoBuilder().title("Java Spring Back End Build Week")
+                .description("Tripsplit using Java Spring/Maven")
                 .contact(new Contact("Navid Karami", "http://www.lambdaschool.com", "Navid@lambdaschool.com"))
-                .license("MIT").licenseUrl("https://github.com/LambdaSchool/java-starthere/blob/master/LICENSE")
+                .license("MIT").licenseUrl("https://github.com/build-week-trip-split/backend/blob/master/LICENSE")
                 .version("1.0.0").build();
     }
 }
