@@ -1,6 +1,7 @@
 package com.lambdaschool.tripsplit;
 
 import com.lambdaschool.tripsplit.models.*;
+import com.lambdaschool.tripsplit.services.BillService;
 import com.lambdaschool.tripsplit.services.RoleService;
 import com.lambdaschool.tripsplit.services.TripService;
 import com.lambdaschool.tripsplit.services.UserService;
@@ -23,6 +24,9 @@ public class SeedData implements CommandLineRunner
 
     @Autowired
     TripService tripService;
+
+    @Autowired
+    BillService billService;
 
 
     @Override
@@ -77,6 +81,7 @@ public class SeedData implements CommandLineRunner
         Trip t1 = new Trip("Chicago", "03-13-2019", "03-25-2019");
         t1.getBills().add(new Bill("Lunch", 50.0, t1, u4));
         t1.getBills().add(new Bill("Dinner", 140.0, t1, u4));
+
 
         tripService.save(t1, u4.getUserid());
 
