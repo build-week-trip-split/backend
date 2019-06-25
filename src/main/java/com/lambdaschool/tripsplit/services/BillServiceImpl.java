@@ -3,12 +3,15 @@ package com.lambdaschool.tripsplit.services;
 import com.lambdaschool.tripsplit.models.Bill;
 import com.lambdaschool.tripsplit.repository.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
+@Service(value = "billService")
 public class BillServiceImpl implements BillService
 {
     @Autowired
@@ -50,7 +53,7 @@ public class BillServiceImpl implements BillService
 
         newBill.setBillTitle(bill.getBillTitle());
         newBill.setBillAmount(bill.getBillAmount());
-        newBill.setPaidby(bill.getPaidby());
+        newBill.setPaidBy(bill.getPaidBy());
         newBill.setTrip(bill.getTrip());
 
         return billRepos.save(newBill);

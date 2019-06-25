@@ -16,23 +16,29 @@ public class Bill
 
     private double billAmount;
 
-    private long Paidby;
 
     @ManyToOne
     @JoinColumn(name = "tripid")
     @JsonIgnoreProperties("bills")
     private Trip trip;
 
+
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    @JsonIgnoreProperties("bills")
+    private User paidBy;
+
     public Bill()
     {
     }
 
-    public Bill(String billTitle, double billAmount, long paidby, Trip trip)
+    public Bill(String billTitle, double billAmount, Trip trip, User paidBy)
     {
         this.billTitle = billTitle;
         this.billAmount = billAmount;
-        Paidby = paidby;
         this.trip = trip;
+        this.paidBy = paidBy;
     }
 
     public long getBillid()
@@ -65,16 +71,6 @@ public class Bill
         this.billAmount = billAmount;
     }
 
-    public long getPaidby()
-    {
-        return Paidby;
-    }
-
-    public void setPaidby(long paidby)
-    {
-        Paidby = paidby;
-    }
-
     public Trip getTrip()
     {
         return trip;
@@ -83,5 +79,15 @@ public class Bill
     public void setTrip(Trip trip)
     {
         this.trip = trip;
+    }
+
+    public User getPaidBy()
+    {
+        return paidBy;
+    }
+
+    public void setPaidBy(User paidBy)
+    {
+        this.paidBy = paidBy;
     }
 }

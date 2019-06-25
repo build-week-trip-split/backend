@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "userroles")
-public class UserRoles extends Auditable implements Serializable
+public class UserRoles implements Serializable
 {
     @Id
     @ManyToOne

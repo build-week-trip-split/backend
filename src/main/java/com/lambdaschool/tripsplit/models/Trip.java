@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "trip")
-public class Trip
+public class Trip extends Auditable
 {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
@@ -22,7 +22,7 @@ public class Trip
 
     private boolean completed;
 
-    private long createdby;
+    private Long madeByWhom;
 
 
     @OneToMany(mappedBy = "trip",
@@ -30,6 +30,8 @@ public class Trip
                 orphanRemoval = true)
     @JsonIgnoreProperties("trip")
     private List<Bill> bills = new ArrayList<>();
+
+
 
     @ManyToMany(mappedBy = "trips")
     @JsonIgnoreProperties("users")
@@ -39,13 +41,22 @@ public class Trip
     {
     }
 
-    public Trip(String tripname, String startDate, String endDate, long createdby)
+    public Trip(String tripname, String startDate, String endDate, Long madeByWhom)
     {
         this.tripname = tripname;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.createdby = createdby;
+        this.madeByWhom = madeByWhom;
         this.completed = false;
+    }
+
+    public Trip(String tripname, String startDate, String endDate)
+    {
+        this.tripname = tripname;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.completed = false;
+
     }
 
     public long getTripid()
@@ -98,14 +109,14 @@ public class Trip
         this.completed = completed;
     }
 
-    public long getCreatedby()
+    public Long getMadeByWhom()
     {
-        return createdby;
+        return madeByWhom;
     }
 
-    public void setCreatedby(long createdby)
+    public void setMadeByWhom(Long madeByWhom)
     {
-        this.createdby = createdby;
+        this.madeByWhom = madeByWhom;
     }
 
     public List<Bill> getBills()
@@ -118,12 +129,12 @@ public class Trip
         this.bills = bills;
     }
 
-    public List<User> getUserss()
+    public List<User> getUsers()
     {
         return users;
     }
 
-    public void setUserss(List<User> users)
+    public void setUsers(List<User> users)
     {
         this.users = users;
     }

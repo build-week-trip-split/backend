@@ -1,9 +1,8 @@
 package com.lambdaschool.tripsplit;
 
-import com.lambdaschool.tripsplit.models.Role;
-import com.lambdaschool.tripsplit.models.User;
-import com.lambdaschool.tripsplit.models.UserRoles;
+import com.lambdaschool.tripsplit.models.*;
 import com.lambdaschool.tripsplit.services.RoleService;
+import com.lambdaschool.tripsplit.services.TripService;
 import com.lambdaschool.tripsplit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Transactional
-//@Component
+@Component
 public class SeedData implements CommandLineRunner
 {
     @Autowired
@@ -21,6 +20,9 @@ public class SeedData implements CommandLineRunner
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TripService tripService;
 
 
     @Override
@@ -69,5 +71,19 @@ public class SeedData implements CommandLineRunner
         users.add(new UserRoles(new User(), r2));
         User u5 = new User("Jane", "password", users);
         userService.save(u5);
+
+        ////////////////////////////////////////////////////////////////////
+
+        Trip t1 = new Trip("Chicago", "03-13-2019", "03-25-2019");
+        t1.getBills().add(new Bill("Lunch", 50.0, t1, u4));
+        t1.getBills().add(new Bill("Dinner", 140.0, t1, u4));
+
+        tripService.save(t1, u4.getUserid());
+
+        Trip t2 = new Trip("Arizona", "03-13-2018", "03-25-2018");
+        t1.getBills().add(new Bill("Lunch", 150.0,  t2, u4));
+        t1.getBills().add(new Bill("Dinner", 140.0, t2, u4));
+
+        tripService.save(t2, u4.getUserid());
     }
 }
