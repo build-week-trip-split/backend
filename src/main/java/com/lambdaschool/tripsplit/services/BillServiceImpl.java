@@ -73,6 +73,20 @@ public class BillServiceImpl implements BillService
         return billRepos.save(newBill);
     }
 
+//    @Override
+//    public Bill save2(Bill bill)
+//    {
+//        Bill newBill = new Bill();
+//
+////        newBill.setBillTitle(bill.getBillTitle());
+//////        newBill.setBillAmount(bill.getBillAmount());
+//////        newBill.setTrip(bill.getTrip());
+//////
+//////        for(User u : bill.getPaidBy())
+//
+//        return billRepos.save(newBill);
+//    }
+
     @Transactional
     @Override
     public Bill update(Bill bill, long id)

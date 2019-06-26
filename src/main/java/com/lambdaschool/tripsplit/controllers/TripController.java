@@ -61,14 +61,14 @@ public class TripController
             @ApiResponse(code = 201, message = "Trip Created Successfully", response = void.class),
             @ApiResponse(code = 500, message = "Error creating Trip", response = ErrorDetail.class)
     })
-    @PostMapping(value = "/trip/{userid}",
+    @PostMapping(value = "/trip/{username}",
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> addNewTrip(@Valid
                                               @RequestBody
-                                                      Trip newTrip, @PathVariable long userid) throws URISyntaxException
+                                                      Trip newTrip, @PathVariable String username) throws URISyntaxException
     {
-        newTrip = tripService.save(newTrip,userid);
+        newTrip = tripService.save(newTrip,username);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();

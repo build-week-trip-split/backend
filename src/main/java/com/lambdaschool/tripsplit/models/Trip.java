@@ -26,8 +26,8 @@ public class Trip extends Auditable
 
 
     @OneToMany(mappedBy = "trip",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnoreProperties("trip")
     private List<Bill> bills = new ArrayList<>();
 

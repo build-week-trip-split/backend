@@ -1,6 +1,7 @@
 package com.lambdaschool.tripsplit.services;
 
 import com.lambdaschool.tripsplit.models.Trip;
+import com.lambdaschool.tripsplit.models.User;
 import com.lambdaschool.tripsplit.repository.BillRepository;
 import com.lambdaschool.tripsplit.repository.TripRepository;
 import com.lambdaschool.tripsplit.repository.UserRepository;
@@ -55,15 +56,17 @@ public class TripServiceImpl implements TripService
 
     @Transactional
     @Override
-    public Trip save(Trip trip,long userid)
+    public Trip save(Trip trip,String username)
     {
        Trip newTrip = new Trip();
+
+        User user = userRepos.findByUsername(username);
 
        newTrip.setTripname(trip.getTripname());
        newTrip.setStartDate(trip.getStartDate());
        newTrip.setEndDate(trip.getEndDate());
        newTrip.setUsers(trip.getUsers());
-       newTrip.setMadeByWhom(userid);
+       newTrip.setMadeByWhom(user.getUserid());
 
        return  tripRepos.save(newTrip);
     }
@@ -101,5 +104,13 @@ public class TripServiceImpl implements TripService
 //        }
 
         return tripRepos.save(currentTrip);
+    }
+
+    @Override
+    public List<Trip> userTrips(String username)
+    {
+        List<Trip> list = new ArrayList<>();
+        tripRepos.findTripsByUsername(username);
+        return list;
     }
 }

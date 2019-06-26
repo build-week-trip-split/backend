@@ -142,4 +142,19 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
 
     }
+
+    @Override
+    public User findByUsername(String username)
+    {
+        User newUser = userrepos.findByUsername(username);
+
+        if(newUser == null)
+        {
+            throw new EntityNotFoundException(" Not current user");
+        }
+        else
+            {
+            return newUser;
+        }
+    }
 }

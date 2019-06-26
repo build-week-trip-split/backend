@@ -12,8 +12,10 @@ public interface TripService
 
     void delete(long id);
 
-    Trip save(Trip trip,long userid);
+    Trip save(Trip trip,String username);
 
     Trip update(Trip trip, long id);
+
+    List<Trip> userTrips (String username);
 
 }

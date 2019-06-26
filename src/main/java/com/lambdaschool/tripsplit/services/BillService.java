@@ -14,6 +14,8 @@ public interface BillService
 
     Bill save( Bill bill,long tripid, long userid);
 
+//    Bill save2(Bill bill);
+
     Bill update(Bill bill, long id);
 
 }

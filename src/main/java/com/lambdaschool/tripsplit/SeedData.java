@@ -79,16 +79,20 @@ public class SeedData implements CommandLineRunner
         ////////////////////////////////////////////////////////////////////
 
         Trip t1 = new Trip("Chicago", "03-13-2019", "03-25-2019");
-        t1.getBills().add(new Bill("Lunch", 50.0, t1, u4));
-        t1.getBills().add(new Bill("Dinner", 140.0, t1, u4));
-
-
-        tripService.save(t1, u4.getUserid());
-
+////
+////       Bill b1 = new Bill("Lunch", 50.0);
+//////        t1.getBills().add(new Bill("Dinner", 140.0, t1, u4));
+//////
+////        billService.save(b1,9,7);
+//        t1.getUsers().add(u4);
+//        t1.getUsers().add(u5);
+//////
+        tripService.save(t1, "Bob");
+//
         Trip t2 = new Trip("Arizona", "03-13-2018", "03-25-2018");
-        t1.getBills().add(new Bill("Lunch", 150.0,  t2, u4));
-        t1.getBills().add(new Bill("Dinner", 140.0, t2, u4));
-
-        tripService.save(t2, u4.getUserid());
+//        t2.getBills().add(new Bill("Lunch", 150.0,  t2, u4));
+//        t2.getBills().add(new Bill("Dinner", 140.0, t2, u4));
+//
+        tripService.save(t2, "Bob");
     }
 }
