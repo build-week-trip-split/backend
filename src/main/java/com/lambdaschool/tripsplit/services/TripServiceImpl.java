@@ -1,6 +1,7 @@
 package com.lambdaschool.tripsplit.services;
 
 import com.lambdaschool.tripsplit.models.Trip;
+import com.lambdaschool.tripsplit.models.User;
 import com.lambdaschool.tripsplit.repository.BillRepository;
 import com.lambdaschool.tripsplit.repository.TripRepository;
 import com.lambdaschool.tripsplit.repository.UserRepository;
@@ -26,10 +27,13 @@ public class TripServiceImpl implements TripService
     private UserRepository userRepos;
 
     @Override
-    public List<Trip> findAll()
+    public List<Trip> findAll(String username)
     {
-        List<Trip> list = new ArrayList<>();
-        tripRepos.findAll().iterator().forEachRemaining(list::add);
+
+        User user = userRepos.findByUsername(username);
+
+        List<Trip> list = tripRepos.findTripByUserId(user.getUserid());
+
         return list;
     }
 
@@ -55,15 +59,17 @@ public class TripServiceImpl implements TripService
 
     @Transactional
     @Override
-    public Trip save(Trip trip,long userid)
+    public Trip save(Trip trip,String username)
     {
        Trip newTrip = new Trip();
+
+        User user = userRepos.findByUsername(username);
 
        newTrip.setTripname(trip.getTripname());
        newTrip.setStartDate(trip.getStartDate());
        newTrip.setEndDate(trip.getEndDate());
        newTrip.setUsers(trip.getUsers());
-       newTrip.setMadeByWhom(userid);
+       newTrip.setMadeByWhom(user.getUserid());
 
        return  tripRepos.save(newTrip);
     }
@@ -101,5 +107,29 @@ public class TripServiceImpl implements TripService
 //        }
 
         return tripRepos.save(currentTrip);
+    }
+
+//    @Override
+//    public List<Trip> userTrips(String username)
+//    {
+//        List<Trip> list = new ArrayList<>();
+//        tripRepos.findTripsByUsername(username);
+//        return list;
+//    }
+
+    @Override
+    public void addUsersToTrips(String username, long tripid)
+    {
+        User user = userRepos.findByUsername(username);
+        tripRepos.insertIntoUserTrips(tripid,user.getUserid());
+    }
+
+    @Override
+    public void completeTrip(long tripid)
+    {
+        Trip update = tripRepos.findById(tripid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(tripid)));
+
+        update.setCompleted(true);
     }
 }

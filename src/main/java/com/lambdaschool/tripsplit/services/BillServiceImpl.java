@@ -1,7 +1,11 @@
 package com.lambdaschool.tripsplit.services;
 
 import com.lambdaschool.tripsplit.models.Bill;
+import com.lambdaschool.tripsplit.models.Trip;
+import com.lambdaschool.tripsplit.models.User;
 import com.lambdaschool.tripsplit.repository.BillRepository;
+import com.lambdaschool.tripsplit.repository.TripRepository;
+import com.lambdaschool.tripsplit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +21,17 @@ public class BillServiceImpl implements BillService
     @Autowired
     private BillRepository billRepos;
 
+    @Autowired
+    private TripRepository tripRepos;
+
+    @Autowired
+    private UserRepository userRepos;
+
     @Override
-    public List<Bill> findAll()
+    public List<Bill> findAll(long tripid)
     {
-        List<Bill> list = new ArrayList<>();
-        billRepos.findAll().iterator().forEachRemaining(list::add);
+        List<Bill> list = billRepos.findBillsbyTripId(tripid);
+
         return list;
     }
 
@@ -47,22 +57,62 @@ public class BillServiceImpl implements BillService
 
     @Transactional
     @Override
-    public Bill save(Bill bill)
+    public Bill save(Bill bill,long tripid, String username)
     {
         Bill newBill = new Bill();
+        User user = userRepos.findByUsername(username);
+        Trip trip = tripRepos.findById(tripid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(tripid)));
 
         newBill.setBillTitle(bill.getBillTitle());
         newBill.setBillAmount(bill.getBillAmount());
-        newBill.setPaidBy(bill.getPaidBy());
-        newBill.setTrip(bill.getTrip());
+        newBill.setPaidBy(user);
+        newBill.setTrip(trip);
 
         return billRepos.save(newBill);
     }
+
+//    @Override
+//    public Bill save2(Bill bill)
+//    {
+//        Bill newBill = new Bill();
+//
+////        newBill.setBillTitle(bill.getBillTitle());
+//////        newBill.setBillAmount(bill.getBillAmount());
+//////        newBill.setTrip(bill.getTrip());
+//////
+//////        for(User u : bill.getPaidBy())
+//
+//        return billRepos.save(newBill);
+//    }
 
     @Transactional
     @Override
     public Bill update(Bill bill, long id)
     {
-        return null;
+       Bill currenBill = billRepos.findById(id)
+               .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+
+       if(bill.getBillTitle() != null)
+       {
+           currenBill.setBillTitle(bill.getBillTitle());
+       }
+
+       if(bill.getBillAmount() != currenBill.getBillAmount())
+       {
+           currenBill.setBillAmount(bill.getBillAmount());
+       }
+
+       if(bill.getPaidBy() != currenBill.getPaidBy())
+       {
+           currenBill.setPaidBy(bill.getPaidBy());
+       }
+
+       if(bill.getTrip() != currenBill.getTrip())
+       {
+           currenBill.setTrip(bill.getTrip());
+       }
+
+       return billRepos.save(currenBill);
     }
 }

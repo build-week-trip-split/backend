@@ -41,6 +41,12 @@ public class Bill
         this.paidBy = paidBy;
     }
 
+    public Bill(String billTitle, double billAmount)
+    {
+        this.billTitle = billTitle;
+        this.billAmount = billAmount;
+    }
+
     public long getBillid()
     {
         return billid;

@@ -1,6 +1,7 @@
 package com.lambdaschool.tripsplit;
 
 import com.lambdaschool.tripsplit.models.*;
+import com.lambdaschool.tripsplit.services.BillService;
 import com.lambdaschool.tripsplit.services.RoleService;
 import com.lambdaschool.tripsplit.services.TripService;
 import com.lambdaschool.tripsplit.services.UserService;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Transactional
-@Component
+//@Component
 public class SeedData implements CommandLineRunner
 {
     @Autowired
@@ -23,6 +24,9 @@ public class SeedData implements CommandLineRunner
 
     @Autowired
     TripService tripService;
+
+    @Autowired
+    BillService billService;
 
 
     @Override
@@ -64,26 +68,31 @@ public class SeedData implements CommandLineRunner
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(), r2));
-        User u4 = new User("Bob", "password", users);
+        User u4 = new User("bob", "password", users);
         userService.save(u4);
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(), r2));
-        User u5 = new User("Jane", "password", users);
+        User u5 = new User("jane", "password", users);
         userService.save(u5);
 
         ////////////////////////////////////////////////////////////////////
 
         Trip t1 = new Trip("Chicago", "03-13-2019", "03-25-2019");
-        t1.getBills().add(new Bill("Lunch", 50.0, t1, u4));
-        t1.getBills().add(new Bill("Dinner", 140.0, t1, u4));
-
-        tripService.save(t1, u4.getUserid());
-
+////
+////       Bill b1 = new Bill("Lunch", 50.0);
+//////        t1.getBills().add(new Bill("Dinner", 140.0, t1, u4));
+//////
+////        billService.save(b1,9,7);
+//        t1.getUsers().add(u4);
+//        t1.getUsers().add(u5);
+//////
+        tripService.save(t1, "bob");
+//
         Trip t2 = new Trip("Arizona", "03-13-2018", "03-25-2018");
-        t1.getBills().add(new Bill("Lunch", 150.0,  t2, u4));
-        t1.getBills().add(new Bill("Dinner", 140.0, t2, u4));
-
-        tripService.save(t2, u4.getUserid());
+//        t2.getBills().add(new Bill("Lunch", 150.0,  t2, u4));
+//        t2.getBills().add(new Bill("Dinner", 140.0, t2, u4));
+//
+        tripService.save(t2, "bob");
     }
 }
