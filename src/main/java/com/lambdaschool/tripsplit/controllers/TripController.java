@@ -25,11 +25,11 @@ public class TripController
 
 
     @ApiOperation(value = "return all trips", response = Trip.class, responseContainer = "List")
-    @GetMapping(value = "/trips",
+    @GetMapping(value = "/trips/{username}",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllTrips()
+    public ResponseEntity<?> listAllTrips(@PathVariable String username)
     {
-        List<Trip> myTrips = tripService.findAll();
+        List<Trip> myTrips = tripService.findAll(username);
         return new ResponseEntity<>(myTrips, HttpStatus.OK);
     }
 
@@ -102,6 +102,33 @@ public class TripController
                     long tripid)
     {
         tripService.delete(tripid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @ApiOperation(value = "Adds users to a trip", response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User added", response = Trip.class),
+            @ApiResponse(code = 500, message = "User was not added", response = Trip.class)
+    })
+    @PostMapping(value = "/trip/adduser/{tripid}/{username}")
+    public ResponseEntity<?> addUserToTrip(
+                                         @PathVariable
+                                                 long tripid, @PathVariable String username)
+    {
+       tripService.addUsersToTrips(username,tripid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+
+
+    @PutMapping(value = "/trip/completed/{tripid}")
+    public ResponseEntity<?> completeTrip(@PathVariable long tripid)
+    {
+        tripService.completeTrip(tripid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

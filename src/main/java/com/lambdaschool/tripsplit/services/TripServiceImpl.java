@@ -27,10 +27,13 @@ public class TripServiceImpl implements TripService
     private UserRepository userRepos;
 
     @Override
-    public List<Trip> findAll()
+    public List<Trip> findAll(String username)
     {
-        List<Trip> list = new ArrayList<>();
-        tripRepos.findAll().iterator().forEachRemaining(list::add);
+
+        User user = userRepos.findByUsername(username);
+
+        List<Trip> list = tripRepos.findTripByUserId(user.getUserid());
+
         return list;
     }
 
@@ -106,11 +109,27 @@ public class TripServiceImpl implements TripService
         return tripRepos.save(currentTrip);
     }
 
+//    @Override
+//    public List<Trip> userTrips(String username)
+//    {
+//        List<Trip> list = new ArrayList<>();
+//        tripRepos.findTripsByUsername(username);
+//        return list;
+//    }
+
     @Override
-    public List<Trip> userTrips(String username)
+    public void addUsersToTrips(String username, long tripid)
     {
-        List<Trip> list = new ArrayList<>();
-        tripRepos.findTripsByUsername(username);
-        return list;
+        User user = userRepos.findByUsername(username);
+        tripRepos.insertIntoUserTrips(tripid,user.getUserid());
+    }
+
+    @Override
+    public void completeTrip(long tripid)
+    {
+        Trip update = tripRepos.findById(tripid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(tripid)));
+
+        update.setCompleted(true);
     }
 }

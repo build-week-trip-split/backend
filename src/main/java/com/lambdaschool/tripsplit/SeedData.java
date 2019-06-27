@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Transactional
-@Component
+//@Component
 public class SeedData implements CommandLineRunner
 {
     @Autowired
@@ -68,12 +68,12 @@ public class SeedData implements CommandLineRunner
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(), r2));
-        User u4 = new User("Bob", "password", users);
+        User u4 = new User("bob", "password", users);
         userService.save(u4);
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(), r2));
-        User u5 = new User("Jane", "password", users);
+        User u5 = new User("jane", "password", users);
         userService.save(u5);
 
         ////////////////////////////////////////////////////////////////////
@@ -87,12 +87,12 @@ public class SeedData implements CommandLineRunner
 //        t1.getUsers().add(u4);
 //        t1.getUsers().add(u5);
 //////
-        tripService.save(t1, "Bob");
+        tripService.save(t1, "bob");
 //
         Trip t2 = new Trip("Arizona", "03-13-2018", "03-25-2018");
 //        t2.getBills().add(new Bill("Lunch", 150.0,  t2, u4));
 //        t2.getBills().add(new Bill("Dinner", 140.0, t2, u4));
 //
-        tripService.save(t2, "Bob");
+        tripService.save(t2, "bob");
     }
 }

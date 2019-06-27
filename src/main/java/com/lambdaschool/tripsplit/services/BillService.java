@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface BillService
 {
-    List<Bill> findAll();
+    List<Bill> findAll(long tripid);
 
     Bill findBillById(long id);
 
     void  delete(long id);
 
-    Bill save( Bill bill,long tripid, long userid);
+    Bill save( Bill bill,long tripid, String username);
 
 //    Bill save2(Bill bill);
 

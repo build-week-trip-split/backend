@@ -28,11 +28,11 @@ public class BillController
     private BillService billService;
 
     @ApiOperation(value = "return all Bills", response = Bill.class, responseContainer = "List")
-    @GetMapping(value = "/bills",
+    @GetMapping(value = "/bills/{tripid}",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllBills()
+    public ResponseEntity<?> listAllBills(@PathVariable long tripid)
     {
-        List<Bill> myBills = billService.findAll();
+        List<Bill> myBills = billService.findAll(tripid);
         return new ResponseEntity<>(myBills, HttpStatus.OK);
     }
 
@@ -63,14 +63,14 @@ public class BillController
             @ApiResponse(code = 201, message = "Bill Created Successfully", response = void.class),
             @ApiResponse(code = 500, message = "Error creating bill", response = ErrorDetail.class)
     })
-    @PostMapping(value = "/bill/{tripid}/{userid}",
+    @PostMapping(value = "/bill/{tripid}/{username}",
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> addNewBill(@Valid
                                               @RequestBody
-                                                      Bill newBill, @PathVariable long userid, @PathVariable long tripid) throws URISyntaxException
+                                                      Bill newBill, @PathVariable String username, @PathVariable long tripid) throws URISyntaxException
     {
-        newBill = billService.save(newBill,tripid,userid);
+        newBill = billService.save(newBill,tripid,username);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();

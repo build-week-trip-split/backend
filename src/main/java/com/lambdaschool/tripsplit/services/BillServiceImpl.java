@@ -28,10 +28,10 @@ public class BillServiceImpl implements BillService
     private UserRepository userRepos;
 
     @Override
-    public List<Bill> findAll()
+    public List<Bill> findAll(long tripid)
     {
-        List<Bill> list = new ArrayList<>();
-        billRepos.findAll().iterator().forEachRemaining(list::add);
+        List<Bill> list = billRepos.findBillsbyTripId(tripid);
+
         return list;
     }
 
@@ -57,11 +57,10 @@ public class BillServiceImpl implements BillService
 
     @Transactional
     @Override
-    public Bill save(Bill bill,long tripid, long userid)
+    public Bill save(Bill bill,long tripid, String username)
     {
         Bill newBill = new Bill();
-        User user = userRepos.findById(userid)
-                .orElseThrow(() -> new EntityNotFoundException(Long.toString(userid)));
+        User user = userRepos.findByUsername(username);
         Trip trip = tripRepos.findById(tripid)
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(tripid)));
 
@@ -91,6 +90,29 @@ public class BillServiceImpl implements BillService
     @Override
     public Bill update(Bill bill, long id)
     {
-        return null;
+       Bill currenBill = billRepos.findById(id)
+               .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+
+       if(bill.getBillTitle() != null)
+       {
+           currenBill.setBillTitle(bill.getBillTitle());
+       }
+
+       if(bill.getBillAmount() != currenBill.getBillAmount())
+       {
+           currenBill.setBillAmount(bill.getBillAmount());
+       }
+
+       if(bill.getPaidBy() != currenBill.getPaidBy())
+       {
+           currenBill.setPaidBy(bill.getPaidBy());
+       }
+
+       if(bill.getTrip() != currenBill.getTrip())
+       {
+           currenBill.setTrip(bill.getTrip());
+       }
+
+       return billRepos.save(currenBill);
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TripService
 {
-    List<Trip> findAll();
+    List<Trip> findAll(String username);
 
     Trip findByTripId(long id);
 
@@ -16,6 +16,10 @@ public interface TripService
 
     Trip update(Trip trip, long id);
 
-    List<Trip> userTrips (String username);
+//    List<Trip> userTrips (String username);
+
+    void addUsersToTrips(String username, long tripid);
+
+    void completeTrip(long tripid);
 
 }
